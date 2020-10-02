@@ -11,8 +11,8 @@ Programa creado para que practiquen los conocimietos
 adquiridos durante la semana
 '''
 
-__author__ = "Inove Coding School"
-__email__ = "alumnos@inove.com.ar"
+__author__ = "Emmanuel Torres Molina"
+__email__ = "emmaotm@gmail.com"
 __version__ = "1.2"
 
 
