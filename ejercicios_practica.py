@@ -39,6 +39,17 @@ def ej1():
     # Graficar el "line plot" de "Y" en función de "X"
     # Colocar la leyenda y el label con el nombre de la función
     # Darle color a la línea a su elección
+    fig1 = plt.figure('Figura 1')
+    fig1.suptitle('$Función$ $Matemática:$')
+    ax = fig1.add_subplot()
+    ax.plot(x, y, color='r')
+    ax.set_facecolor(color='whitesmoke')
+    ax.set_title('$Y = X^2$')
+    ax.set_xlabel('$x$', fontsize=13)
+    ax.set_ylabel('$Y = f(x)$', fontsize=13)
+    ax.legend(['$Función$ $Cuadrática$'])
+    plt.grid(True)
+    plt.show(block=True)
 
 
 def ej2():
@@ -64,6 +75,16 @@ def ej2():
 
     # Cada función dibujarla con un color distinto
     # a su elección
+    fig2 = plt.figure('Figura 2')
+    fig2.suptitle('$Funciones$ $Polinómicas.$')
+    ax = fig2.add_subplot()
+    ax.plot(x, y1, color='b')
+    ax.plot(x, y2, color='k')
+    ax.legend(['$y = x^2$', '$y = x^3$'])
+    ax.set_xlabel('$x$', fontsize=13)
+    ax.set_ylabel('$Y = f(x)$', fontsize=13)
+    plt.grid(True)
+    plt.show(block=True)
 
 
 def ej3():
@@ -84,6 +105,16 @@ def ej3():
     # cada gráfico
 
     # Elegir un marker a elección
+    fig3 = plt.figure('Figura 3')
+    fig3.suptitle('$Función$ $Matemática:$')
+    ax = fig3.add_subplot()
+    ax.scatter(x, y, color='g', marker='+')
+    ax.set_xlabel('$x$', fontsize=13)
+    ax.set_ylabel('$Y = f(x)$', fontsize=13)
+    ax.set_title('$Tangente$ $Hiperbólica$')
+    ax.legend(["$tanh(x)$"])
+    ax.grid(True)
+    plt.show(block=True)
 
 
 def ej4():
@@ -107,7 +138,7 @@ def ej4():
     y4 = np.sqrt(x)
 
     # Esos tres gráficos deben estar colocados
-    # en la diposición de 3 filas y 1 columna:
+    # en la diposición de 2 filas y 2 columnas:
     # ------
     #  graf1 | graf2
     # ------
@@ -122,12 +153,49 @@ def ej4():
     # a su elección
 
     # Colocar una grilla a elección
+    fig4 = plt.figure('Figura 4')
+    fig4.suptitle('$Funciones$ $Polinómicas.$')
+    ax1 = fig4.add_subplot(2,2,1)
+    ax2 = fig4.add_subplot(2,2,2)
+    ax3 = fig4.add_subplot(2,2,3)
+    ax4 = fig4.add_subplot(2,2,4)
+    
+    ax1.plot(x, y1, c='r', label='$y = x^2$')
+    #ax1.set_xlabel('$x$')
+    ax1.set_ylabel('$Y = f(x)$')
+    ax1.set_title('$Gráfico$ $1:$')
+    ax1.legend()
+    ax1.grid(True)
+
+    ax2 = fig4.add_subplot(2,2,2)
+    ax2.plot(x, y2, color='g')
+    #ax2.set_xlabel('$x$')
+    #ax2.set_ylabel('$Y = f(x)$')
+    ax2.set_title('$Gráfico$ $2:$')
+    ax2.legend(['$y = x^3$'])
+    ax2.grid(True)
+
+    ax3.plot(x, y3, color='b')
+    ax3.set_xlabel('$x$')
+    ax3.set_ylabel('$Y = f(x)$')
+    ax3.set_title('$Gráfico$ $3:$')
+    ax3.legend(['$y = x^4$'])
+    ax3.grid(True)
+
+    ax4.plot(x, y4, color='k')
+    ax4.set_xlabel('$x$')
+    #ax4.set_ylabel('$Y = f(x)$')
+    ax4.set_title('$Gráfico$ $4:$')
+    ax4.legend(['$y = \sqrt{x}$'])
+    ax4.grid(True)
+
+    plt.show(block=True)
+
 
 
 if __name__ == '__main__':
-    print("Bienvenidos a otra clase de Inove con Python")
+    print("\n\nBienvenidos a otra clase de Inove con Python.\n\n")
     ej1()
-    # ej2()
-    # ej2()
-    # ej3()
-    # ej4()
+    ej2()
+    ej3()
+    ej4()
