@@ -161,6 +161,7 @@ def ej4():
     ax4 = fig4.add_subplot(2,2,4)
     
     ax1.plot(x, y1, c='r', label='$y = x^2$')
+    ax1.set_facecolor('whitesmoke')
     #ax1.set_xlabel('$x$')
     ax1.set_ylabel('$Y = f(x)$')
     ax1.set_title('$Gráfico$ $1:$')
@@ -169,6 +170,7 @@ def ej4():
 
     ax2 = fig4.add_subplot(2,2,2)
     ax2.plot(x, y2, color='g')
+    ax2.set_facecolor('whitesmoke')
     #ax2.set_xlabel('$x$')
     #ax2.set_ylabel('$Y = f(x)$')
     ax2.set_title('$Gráfico$ $2:$')
