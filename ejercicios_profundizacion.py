@@ -55,6 +55,39 @@ def ej1():
     # Cada gráfico realizarlo con un color distinto
     # a su elección
 
+    y1 = [i**2 for i in x]
+    y2 = [i**3 for i in x]
+    y3 = [i**4 for i in x]
+
+    fig1 = plt.figure('Figura 1')
+    fig1.suptitle('$Funciones$ $Polinómicas.$')
+    ax1 = fig1.add_subplot(3,1,1)
+    ax2 = fig1.add_subplot(3,1,2)
+    ax3 = fig1.add_subplot(3,1,3)
+    
+    ax1.plot(x, y1, color='r', label='$Y=x^2$')
+    ax1.set_title('$Gráfico$ $Nro$ $1:$')
+    #ax1.set_xlabel('$x$', fontsize=10)
+    ax1.set_ylabel('Y1 = f(x)$', fontsize=10)
+    ax1.grid(True)
+    ax1.legend()
+
+    ax2.plot(x, y2, color='g', marker='.', label='$Y=x^3$')
+    #ax2.set_title('$Gráfico$ $Nro$ $2:$')
+    #ax2.set_xlabel('$x$', fontsize=10)
+    ax2.set_ylabel('Y2 = f(x)$', fontsize=10)
+    ax2.grid(True)
+    ax2.legend()
+
+    ax3.plot(x, y3, color='b', label='$Y=x^4$')
+    #ax3.set_title('$Gráfico$ $Nro$ $3:$')
+    ax3.set_xlabel('$x$', fontsize=15)
+    ax3.set_ylabel('Y3 = f(x)$', fontsize=10)
+    ax3.grid(True)
+    ax3.legend()
+
+    plt.show()
+
 
 def ej2():
     # Scatter Plot
@@ -82,6 +115,34 @@ def ej2():
 
     # Cada gráfico realizarlo con un mark distinto
     # a su elección.
+    y1 = np.sin(x)
+    y2 = np.cos(x)
+
+    fig2 = plt.figure('Figura 2')
+    fig2.suptitle('$Funciones$ $Armónicas:$')
+    ax1 = fig2.add_subplot(1,2,1)
+    ax2 = fig2.add_subplot(1,2,2)
+
+    ax1.scatter(x, y1, c='r', marker='^', label='$Y=sin(x)$')
+    ax1.set_facecolor('whitesmoke')
+    ax1.set_title('$Función$ $Senoidal$')
+    ax1.set_xlabel('$x$', fontsize=12)
+    ax1.set_ylabel('$Y1=f(x)$', fontsize=13)
+    ax1.set_xlim(0, 4*np.pi)
+    ax1.legend()
+    ax1.grid(True)
+
+    ax2.scatter(x, y2, c='darkblue', marker='o', label='$Y=cos(x)$')
+    ax2.set_facecolor('whitesmoke')
+    ax2.set_title('$Función$ $Cosenoidal$')
+    ax2.set_xlabel('$x$', fontsize=12)
+    ax2.set_ylabel('$Y2=f(x)$', fontsize=13)
+    ax2.set_xlim(0, 4*np.pi)
+    ax2.legend()
+    ax2.grid(True)
+
+    plt.show()
+
 
 
 def ej3():
@@ -156,9 +217,9 @@ def ej5():
 
 
 if __name__ == '__main__':
-    print("Bienvenidos a otra clase de Inove con Python")
+    print("\n\nBienvenidos a otra clase de Inove con Python.\n\n")
     ej1()
-    # ej2()
+    ej2()
     # ej3()
     # ej4()
     # ej5()
