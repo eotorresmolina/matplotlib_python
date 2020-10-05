@@ -315,7 +315,7 @@ def bar_plot():
 
 def pie_plot():
     # Utilizar gráfico de torta para evaluar la distribución
-    # Segmetar el consumo en una lista de diccionarios tal como
+    # Segmentar el consumo en una lista de diccionarios tal como
     # si hubiera venido de un archivo.
     # Ahora los trimestres van del 0 al 3
     consumo = [{'carne': 20, 'fruta': 25, 'verdura': 22},

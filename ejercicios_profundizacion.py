@@ -144,7 +144,6 @@ def ej2():
     plt.show()
 
 
-
 def ej3():
     # Bar Plot
     # Generar un gráfico de barras simple a partir
@@ -160,6 +159,14 @@ def ej3():
     # Se debe colocar título al gráfico.
     # Se debe cambiar la grilla y el fondo a su elección.
 
+    fig3 = plt.figure('Figura 3')
+    fig3.suptitle('$Lenguajes$ $de$ $Programación$')
+    ax = fig3.add_subplot(1,1,1)
+    ax.bar(lenguajes, performance, color='darkblue')
+    ax.set_facecolor('black')
+    ax.grid(ls='dashed')
+    plt.show()
+
 
 def ej4():
     # Pie Plot
@@ -171,11 +178,21 @@ def ej4():
                      'C#': 8.2, 'C': 5.9
                      }
 
-    # El gráfico debe tener usar como label las keys del diccionario,
+    # El gráfico debe usar como label las keys del diccionario,
     # debe usar como datos los values del diccionario
     # Se desea resaltar (explode) el dato de Python
     # Se desea mostrar en el gráfico los porcentajes de c/u
     # Se debe colocar un título al gráfico
+
+    fig4 = plt.figure('Figura 4')
+    fig4.suptitle('$Lenguajes$ $de$ $Programación$')
+    ax = fig4.add_subplot()
+    explode = (0.2, 0, 0, 0, 0, 0, 0)
+    ax.pie(uso_lenguajes.values(), labels=uso_lenguajes.keys(), 
+    explode=explode, autopct='%1.1f%%', shadow=True, startangle=90)
+    
+    ax.axis('equal')
+    plt.show()
 
 
 def ej5():
@@ -189,13 +206,25 @@ def ej5():
     # Se generó una lista de diccionarios con dos columnas "X" e "Y"
     # que corresponden a los valores de nuestra señal senoidal.
     # Se pide usar comprensión de listas para generar las dos listas
-    # por separado de los valoresde "X" e "Y" para poder utilizar
+    # por separado de los valores de "X" e "Y" para poder utilizar
     # el line plot y observar la señal
 
     # signal_x = [....]
     # signal_y = [....]
 
     # plot(signal_x, signal_y)
+    signal_x = [x.get('X') for x in signal]
+    signal_y = [y.get('Y') for y in signal]
+
+    fig5 = plt.figure('Figura 5')
+    fig5.suptitle('$Señal$ $Senoidal$')
+    ax = fig5.add_subplot(1,1,1)
+    ax.plot(signal_x, signal_y, color='darkgreen', linewidth=3.0)
+    ax.set_xlabel('$signal$ $x$', fontsize=13)
+    ax.set_ylabel('$signal$ $y$', fontsize=13)
+    ax.set_facecolor('whitesmoke')
+    ax.grid(ls='dashdot')
+    plt.show(block=False)
 
     # Ahora que han visto la señal senoidal en su gráfico, se desea
     # que generen otras dos listas de "X" e "Y" pero filtradas por
@@ -206,6 +235,9 @@ def ej5():
     # filter_signal_x = [....]
     # filter_signal_y = [....]
 
+    filter_signal_x = [x.get('X') for x in signal if (abs(x.get('Y')) > 0.7)]
+    filter_signal_y = [y.get('Y') for y in signal if (abs(y.get('Y')) > 0.7)]
+
     # Graficar juntas ambos conjuntos de listas y observar
     # el resultado. Graficar filter como scatter plot
 
@@ -214,12 +246,26 @@ def ej5():
 
     # Pueden ver el concepto y la utilidad de
     # realizar un gráfico encima de otro para filtrar datos?
+    fig6 = plt.figure('Figura 6')
+    fig6.suptitle('$Señales$ $Superpuestas$')
+    ax = fig6.add_subplot(1,1,1)
+
+    ax.plot(signal_x, signal_y, color='darkgreen', linewidth=3.0, label='$Señal$ $Original$')
+    ax.scatter(filter_signal_x, filter_signal_y, color='blue', marker='x',
+                linewidth=4.0, label='$Señal$ $Filtrada$')
+    
+    ax.set_xlabel('$signal$ $x$', fontsize=13)
+    ax.set_ylabel('$signal$ $y$', fontsize=13)
+    ax.set_facecolor('whitesmoke')
+    ax.grid(ls='dashdot')
+    ax.legend()
+    plt.show(block=True)
 
 
 if __name__ == '__main__':
     print("\n\nBienvenidos a otra clase de Inove con Python.\n\n")
     ej1()
     ej2()
-    # ej3()
-    # ej4()
-    # ej5()
+    ej3()
+    ej4()
+    ej5()
