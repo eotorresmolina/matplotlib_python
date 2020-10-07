@@ -100,7 +100,7 @@ def ej1():
 
     '''
 
-    # Desarrollo con Comprensión de Listas:
+    # Desarrollo Usando Comprensión de Listas:
 
     # Obtengo mi lista de Diccionarios abriendo el archivos .csv
     with open('ventas.csv', 'r') as csvfile:
@@ -157,7 +157,7 @@ def ej1():
 
 
 def ej2():
-    print('Comenzamos a ponernos serios!')
+    print('\nComenzamos a ponernos serios!\n\n')
 
     '''
     Queremos visualizar como ver la tendencia de venta de los alimentos
@@ -182,6 +182,49 @@ def ej2():
     plot(tendencia)
 
     '''
+
+    # Desarrollo Usando Comprensión de Listas:
+
+    with open('ventas.csv', 'r') as csvfile:
+        data = list(csv.DictReader(csvfile))
+
+    # Obtengo la lista con la cantidad de ventas de los Alimentos a lo largo del año.
+    alimentos = [int(row.get('Alimentos')) for row in data]
+    
+    # Obtengo la Tendencia usando la función "diff" de la librería Numpy:
+    tendencia = np.diff(alimentos)
+    
+    # Ploteo:
+    fig3 = plt.figure('Figura 3')
+    fig3.suptitle('$Tendencia$ $de$ $Ventas$ $de$ $Alimentos$ $a$ $lo$ $largo$ $del$ $Año$')
+    ax = fig3.add_subplot(1,1,1)
+    ax.plot(tendencia, color='k', linewidth=2.6)
+    ax.set_title('$Usando$ $Comprensión$ $de$ $Listas$')
+    ax.set_xlabel('$Meses$', fontsize=13)
+    ax.set_ylabel('$Ventas$ $de$ $Alimentos$', fontsize=13)
+    ax.set_xlim(0, len(tendencia))
+    ax.set_facecolor('lightcyan')
+    ax.grid(ls='dashdot')
+    plt.show(block=False)
+
+
+    # Desarrollo Usando Numpy:
+
+    dataset = np.genfromtxt('ventas.csv', delimiter=',', dtype=int ,skip_header=1)
+    tendencia_numpy = np.diff(dataset[:, 2])
+
+    # Ploteo:
+    fig4 = plt.figure('Figura 4')
+    fig4.suptitle('$Tendencia$ $de$ $Ventas$ $de$ $Alimentos$ $a$ $lo$ $largo$ $del$ $Año$')
+    ax = fig4.add_subplot(1,1,1)
+    ax.plot(tendencia_numpy, color='darkblue', linewidth=2.8)
+    ax.set_title('$Usando$ $Numpy$')
+    ax.set_xlabel('$Meses$', fontsize=13)
+    ax.set_ylabel('$Ventas$ $de$ $Alimentos$', fontsize=13)
+    ax.set_xlim(0, len(tendencia_numpy))
+    ax.set_facecolor('lightyellow')
+    ax.grid(ls='dashed')
+    plt.show(block=True)
 
 
 def ej3():
@@ -249,7 +292,7 @@ def ej5():
 if __name__ == '__main__':
     print("\n\nEjercicios de práctica.\n\n")
     ej1()
-    # ej2()
-    # ej3()
-    # ej4()
-    # ej5()
+    ej2()
+    #ej3()
+    #ej4()
+    #ej5()
