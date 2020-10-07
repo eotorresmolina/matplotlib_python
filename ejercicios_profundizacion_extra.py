@@ -7,13 +7,19 @@ Autor: Inove Coding School
 Version: 1.2
 
 Descripcion:
-Programa creado para que practiquen los conocimietos
-adquiridos durante la semana
+Programa creado para que practiquen los conocimientos
+adquiridos durante la semana.
 '''
 
 __author__ = "Emmanuel Torres Molina"
 __email__ = "emmaotm@gmail.com"
 __version__ = "1.2"
+
+
+import csv
+import numpy as np
+from matplotlib import pyplot as plt
+import numpy as np
 
 
 '''
@@ -47,7 +53,7 @@ Descripción del dataset "ventas.csv"
 
 
 def ej1():
-    print('Comenzamos a divertirnos!')
+    print('Comenzamos a divertirnos!\n')
 
     '''
     Para comenzar a calentar en el uso del dataset se lo solicita
@@ -58,11 +64,11 @@ def ej1():
 
     TIP:
     1) Para aquellos que utilicen listas siempre primero deberan
-    emprezar filtrando el dataset en una lista de diccionarios que
-    posee solo las filas y columnas que a están buscando.
-    En este caso todas las filas cuyo mes = 1 y solo la columan
+    empezar filtrando el dataset en una lista de diccionarios que
+    posee solo las filas y columnas que están buscando.
+    En este caso todas las filas cuyo mes = 1 y solo la columna
     de día(x) y de alimentos(y).
-    Una vez que tiene esa lista de dccionarios reducida a la información
+    Una vez que tiene esa lista de diccionarios reducida a la información
     de interés, debe volver a utilizar comprensión de listas para separar
     los datos de los días(x) y de los alimentos(y)
 
@@ -93,6 +99,61 @@ def ej1():
     y = mes_1[:, 2]
 
     '''
+
+    # Desarrollo con Comprensión de Listas:
+
+    # Obtengo mi lista de Diccionarios abriendo el archivos .csv
+    with open('ventas.csv', 'r') as csvfile:
+        data = list(csv.DictReader(csvfile))
+
+    # Filtro los datos creando una nueva lista para la Categoría "Alimentos" en el Mes 1.
+    data_filtrada_reducida = [{'Dia': row.get('Dia'), 'Alimentos': row.get('Alimentos')}
+                               for row in data if (row.get('Mes') == '1')]
+
+    # Creo 2 Nuevas Listas que Separe los días del "Mes 1" y "Alimentos":
+    lista_ventas_dias = [int(dia.get('Dia')) for dia in data_filtrada_reducida]
+    lista_ventas_alimentos = [int(venta.get('Alimentos')) for venta in data_filtrada_reducida]
+ 
+    # Ploteo:
+    fig1 = plt.figure('Figura 1')
+    fig1.suptitle('$Cantidad$ $de$ $Ventas$ $de$ $Alimentos$ $en$ $el$ $Mes$ $1$', fontsize=14)
+    ax = fig1.add_subplot(1,1,1)
+    ax.plot(lista_ventas_dias, lista_ventas_alimentos, color='darkblue', linewidth=2.0)
+    ax.scatter(lista_ventas_dias, lista_ventas_alimentos, color='r', marker='o', linewidth=3.0)
+    ax.set_title('$Usando$ $Comprensión$ $de$ $Listas$')
+    ax.set_xlim(lista_ventas_dias[0], lista_ventas_dias[-1])
+    ax.set_xlabel('$Días(x)$', fontsize=14)
+    ax.set_ylabel('$Ventas$ $de$ $Alimentos$ $(y)$', fontsize=14)
+    ax.set_facecolor('whitesmoke')
+    ax.grid(ls='dashdot')
+    plt.show(block=False)
+    
+
+    # Desarrollo Usando Numpy:
+    data_numpy = np.genfromtxt('ventas.csv', dtype=int, delimiter=',', skip_header=1)
+    
+    # Aplico una Máscara para Obtener los Valores que Correspondan al Mes 1.
+    mask_mes_1 = data_numpy[:, 0] == 1  
+    
+    # Obtengo los días correspondientes al Mes 1.
+    dias_mes_1 = data_numpy[mask_mes_1, 1]
+
+    # Obtengo la Cantidad de Ventas de Alimentos por día del Mes 1. 
+    ventas_alimentos_mes_1 = data_numpy[mask_mes_1, 2]
+
+    # Ploteo:
+    fig2 = plt.figure('Figura 2')
+    fig2.suptitle('$Cantidad$ $de$ $Ventas$ $de$ $Alimentos$ $en$ $el$ $Mes$ $1$', fontsize=14)
+    ax = fig2.add_subplot(1,1,1)
+    ax.plot(dias_mes_1, ventas_alimentos_mes_1, color='red', linewidth=2.0)
+    ax.scatter(dias_mes_1, ventas_alimentos_mes_1, color='darkblue', marker='o', linewidth=3.0)
+    ax.set_title('$Usando$ $Librería$ $Numpy$')
+    ax.set_xlim(dias_mes_1[0], dias_mes_1[-1])
+    ax.set_xlabel('$Días(x)$', fontsize=14)
+    ax.set_ylabel('$Ventas$ $de$ $Alimentos$ $(y)$', fontsize=14)
+    ax.set_facecolor('whitesmoke')
+    ax.grid(ls='dashdot')
+    plt.show(block=True)
 
 
 def ej2():
@@ -186,7 +247,7 @@ def ej5():
 
 
 if __name__ == '__main__':
-    print("Ejercicios de práctica")
+    print("\n\nEjercicios de práctica.\n\n")
     ej1()
     # ej2()
     # ej3()
