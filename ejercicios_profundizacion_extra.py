@@ -255,7 +255,7 @@ def ej3():
     ax.plot(tendencia_facturacion_numpy, color='darkgreen', linewidth=3.1, label='1 - $Venta$  0 - $No$ $Venta$')
     ax.set_title('$Usando$ $Numpy$')
     ax.set_xlabel('$Meses$', fontsize=13)
-    ax.set_ylabel('$Facturación$ $de$ $Electrodomésticos$', fontsize=13)
+    ax.set_ylabel('$Ventas$ $de$ $Electrodomésticos$', fontsize=13)
     ax.set_xlim(0, len(tendencia_facturacion_numpy))
     ax.set_facecolor('whitesmoke')
     ax.grid(ls='dashdot')
@@ -277,7 +277,7 @@ def ej3():
     ax.plot(lista_facturacion_electrodomesticos, color='darkred', linewidth=3.1, label='1 - $Venta$  0 - $No$ $Venta$')
     ax.set_title('$Usando$ $Compresión$ $de$ $Listas$')
     ax.set_xlabel('$Meses$', fontsize=13)
-    ax.set_ylabel('$Facturación$ $de$ $Electrodomésticos$', fontsize=13)
+    ax.set_ylabel('$Ventas$ $de$ $Electrodomésticos$', fontsize=13)
     ax.set_xlim(0, len(lista_facturacion_electrodomesticos))
     ax.set_facecolor('whitesmoke')
     ax.grid(ls='dashdot')
@@ -286,11 +286,11 @@ def ej3():
     
 
 def ej4():
-    print("Exprimiendo los datos")
+    print("\nExprimiendo los datos\n\n")
 
     '''
     Obtener la facturación total (la suma total en los 3 meses)
-    de cada categória por separado. Nos debe quedar el total
+    de cada categoría por separado. Nos debe quedar el total
     facturado en alimentos, en bazar, en limpieza y en
     electrodomesticos por separado (son 4 valores)
 
@@ -303,8 +303,60 @@ def ej4():
 
     Con la información obtenida realizar un Pie Plot
     para visualizar que categoría facturó más en lo que va
-    del año
+    del año.
     '''
+
+    # Desarrollo Usando Numpy:
+
+    dataset = np.genfromtxt('ventas.csv', delimiter=',', dtype=int, skip_header=1)
+    fact_alimentos_numpy = np.sum(dataset[:, 2], axis=0) 
+    fact_bazar_numpy = np.sum(dataset[:, 3], axis=0)
+    fact_limpieza_numpy = np.sum(dataset[:, 4], axis=0)
+    fact_electrodom_numpy = np.sum(dataset[:, 5], axis=0)
+    
+    explode = [0, 0, 0, 0.1]
+
+    # Ploteo:
+    fig7 = plt.figure('Figura 7')
+    fig7.suptitle('$Facturación$ $Total$ $a$ $lo$ $Largo$ $del$ $Año$', fontsize=15)
+    ax = fig7.add_subplot()
+    ax.set_title('Usando Numpy')
+    ax.pie([fact_alimentos_numpy, fact_bazar_numpy, fact_limpieza_numpy, fact_electrodom_numpy], 
+           labels=['Alimentos', 'Bazar', 'Limpieza', 'Electrodomésticos'], 
+           shadow=True, autopct='%1.2f%%', startangle=90, explode=explode)
+    
+    ax.set_facecolor('lightyellow')
+    ax.axis('equal')
+    plt.show(block=False)
+
+
+    # Desarrollo Usando Compresión de Listas:
+
+    with open('ventas.csv', 'r') as csvfile:
+        data = list(csv.DictReader(csvfile))
+
+    alimentos = [int(row.get('Alimentos')) for row in data]
+    bazar = [int(row.get('Bazar')) for row in data]
+    limpieza = [int(row.get('Limpieza')) for row in data]
+    electrodomesticos = [int(row.get('Electrodomesticos')) for row in data]
+
+    fact_alimentos = sum(alimentos)
+    fact_bazar = sum(bazar)
+    fact_limpieza = sum(limpieza)
+    fact_electrodomesticos = sum(electrodomesticos)
+
+    # Ploteo:
+    fig8 = plt.figure('Figura 8')
+    fig8.suptitle('$Facturación$ $Total$ $a$ $lo$ $Largo$ $del$ $Año$', fontsize=15)
+    ax = fig8.add_subplot()
+    ax.set_title('Usando Compresión de Listas')
+    ax.pie([fact_alimentos, fact_bazar, fact_limpieza, fact_electrodomesticos], 
+           labels=['Alimentos', 'Bazar', 'Limpieza', 'Electrodomésticos'], 
+           shadow=True, autopct='%1.2f%%', startangle=90, explode=explode)
+    
+    ax.set_facecolor('lightgreen')
+    ax.axis('equal')
+    plt.show(block=True)
 
 
 def ej5():
@@ -336,5 +388,5 @@ if __name__ == '__main__':
     ej1()
     ej2()
     ej3()
-    #ej4()
+    ej4()
     #ej5()
