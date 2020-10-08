@@ -228,7 +228,7 @@ def ej2():
 
 
 def ej3():
-    print("Buscando la tendencia")
+    print("\nBuscando la tendencia\n\n")
 
     '''
     Si observa el dataset, los electrodomésticos no siempre
@@ -242,6 +242,48 @@ def ej3():
 
     '''
 
+    # Desarrollo Usando Numpy:
+   
+    dataset = np.genfromtxt('ventas.csv', delimiter=',', dtype=int, skip_header=0)
+    dataset = dataset[1:, :]    # Obtengo el dataset sin el header
+    tendencia_facturacion_numpy = np.where(dataset[:, 5] != 0, 1, 0)
+
+    # Ploteo:
+    fig5 = plt.figure('Figura 5')
+    fig5.suptitle('$Tendencia$ $de$ $Facturación$ $de$ $Electrodomésticos$ $a$ $lo$ $largo$ $del$ $Año$')
+    ax = fig5.add_subplot(1,1,1)
+    ax.plot(tendencia_facturacion_numpy, color='darkgreen', linewidth=3.1, label='1 - $Venta$  0 - $No$ $Venta$')
+    ax.set_title('$Usando$ $Numpy$')
+    ax.set_xlabel('$Meses$', fontsize=13)
+    ax.set_ylabel('$Facturación$ $de$ $Electrodomésticos$', fontsize=13)
+    ax.set_xlim(0, len(tendencia_facturacion_numpy))
+    ax.set_facecolor('whitesmoke')
+    ax.grid(ls='dashdot')
+    ax.legend()
+    plt.show(block=False)
+
+
+    # Desarrollo Usando Compresión de Listas:
+    
+    with open('ventas.csv', 'r') as csvfile:
+        data = list(csv.DictReader(csvfile))
+
+    lista_facturacion_electrodomesticos = [0 if row.get('Electrodomesticos') == '0' else 1 for row in data]
+    
+    # Ploteo:
+    fig6 = plt.figure('Figura 6')
+    fig6.suptitle('$Tendencia$ $de$ $Facturación$ $de$ $Electrodomésticos$ $a$ $lo$ $largo$ $del$ $Año$')
+    ax = fig6.add_subplot(1,1,1)
+    ax.plot(lista_facturacion_electrodomesticos, color='darkred', linewidth=3.1, label='1 - $Venta$  0 - $No$ $Venta$')
+    ax.set_title('$Usando$ $Compresión$ $de$ $Listas$')
+    ax.set_xlabel('$Meses$', fontsize=13)
+    ax.set_ylabel('$Facturación$ $de$ $Electrodomésticos$', fontsize=13)
+    ax.set_xlim(0, len(lista_facturacion_electrodomesticos))
+    ax.set_facecolor('whitesmoke')
+    ax.grid(ls='dashdot')
+    ax.legend()
+    plt.show(block=True)
+    
 
 def ej4():
     print("Exprimiendo los datos")
@@ -293,6 +335,6 @@ if __name__ == '__main__':
     print("\n\nEjercicios de práctica.\n\n")
     ej1()
     ej2()
-    #ej3()
+    ej3()
     #ej4()
     #ej5()
