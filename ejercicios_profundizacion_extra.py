@@ -360,7 +360,7 @@ def ej4():
 
 
 def ej5():
-    print("Ahora sí! buena suerte :)")
+    print("\nAhora sí! buena suerte :)\n\n")
 
     '''
     Ahora que ya hemos jugado un poco con nuestro dataset,
@@ -382,6 +382,108 @@ def ej5():
     apilados o agrupados (a su elección)
     '''
 
+    # Desarrollo Usando Numpy:
+
+    dataset = np.genfromtxt('ventas.csv', delimiter=',', dtype=int, skip_header=1)
+
+    mask_mes_1 = dataset[:, 0] == 1
+    mes_1 = dataset[mask_mes_1, 2:6]
+    
+    mask_mes_2 = dataset[:, 0] == 2
+    mes_2 = dataset[mask_mes_2, 2:6]
+
+    mes_3 = dataset[dataset[:, 0] == 3, 2:6]
+
+    # Ploteo:
+    fig9 = plt.figure('Figura 9')
+    fig9.suptitle('Total de Ventas Usando Numpy', fontsize=15)
+    ax1 = fig9.add_subplot(3,1,1)
+    ax2 = fig9.add_subplot(3,1,2)
+    ax3 = fig9.add_subplot(3,1,3)
+
+    ax1.bar(['Alimentos', 'Bazar', 'Limpieza', 'Electrodomesticos'],
+        [np.sum(mes_1[:, 0], axis=0), np.sum(mes_1[:, 1], axis=0), 
+        np.sum(mes_1[:, 2], axis=0), np.sum(mes_1[:, 3], axis=0)], 
+        label='Mes 1', color='darkblue')     
+    ax1.set_facecolor('lightcyan')
+    ax1.set_title('Mes 1', fontsize=12)
+    ax1.legend()
+
+    ax2.bar(['Alimentos', 'Bazar', 'Limpieza', 'Electrodomesticos'],
+        [np.sum(mes_2[:, 0], axis=0), np.sum(mes_2[:, 1], axis=0), 
+        np.sum(mes_2[:, 2], axis=0), np.sum(mes_2[:, 3], axis=0)], 
+        label='Mes 2', color='darkgreen')     
+    ax2.set_facecolor('whitesmoke')
+    ax2.set_title('Mes 2', fontsize=12)
+    ax2.legend()
+
+    ax3.bar(['Alimentos', 'Bazar', 'Limpieza', 'Electrodomesticos'],
+        [np.sum(mes_3[:, 0], axis=0), np.sum(mes_3[:, 1], axis=0), 
+        np.sum(mes_3[:, 2], axis=0), np.sum(mes_3[:, 3], axis=0)], 
+        label='Mes 3', color='red')     
+    ax3.set_facecolor('lightyellow')
+    ax3.set_title('Mes 3', fontsize=12)
+    ax3.legend()
+
+    plt.show(block=False)
+
+    # Ploteo Utilizando Gráficos de Barras Agrupados y Apilados:
+    fig10 = plt.figure('Figura 10')
+    fig10.suptitle('Total de Ventas Usando Numpy')
+    ax1 = fig10.add_subplot(2,1,1)
+    ax2 = fig10.add_subplot(2,1,2)
+
+    # Gráfico de Barras Agrupados:
+    width = 1/6
+    meses = np.array([1, 2, 3])
+
+    ax1.bar(meses, [np.sum(mes_1[:, 0], axis=0), np.sum(mes_2[:, 0], axis=0), np.sum(mes_3[:, 0], axis=0)], 
+            width=width, label='Alimentos')
+    ax1.bar(meses + width, [np.sum(mes_1[:, 1], axis=0), np.sum(mes_2[:, 1], axis=0), np.sum(mes_3[:, 1], axis=0)], 
+            width=width, label='Bazar')
+    ax1.bar(meses + 2*width, [np.sum(mes_1[:, 2], axis=0), np.sum(mes_2[:, 2], axis=0), np.sum(mes_3[:, 2], axis=0)],
+            width=width, label='Limpieza')
+    ax1.bar(meses + 3*width, [np.sum(mes_1[:, 3], axis=0), np.sum(mes_2[:, 3], axis=0), np.sum(mes_3[:, 3], axis=0)], 
+            width=width, label='Electrodomésticos')
+
+    ax1.set_facecolor('lightgreen')
+    ax1.set_title('Gráfico de Barras Agrupados')
+    ax1.set_xticks(meses + width)
+    ax1.set_xticklabels(['Mes 1', 'Mes 2', 'Mes 3'])
+    ax1.legend()
+    
+
+    # Gráfico de Barras Apilados (Stack):
+    meses_label = ['Mes 1', 'Mes 2', 'Mes 3']
+
+    # Obtengo la Suma Total de lo facturado por mes de cada Categoría:
+    facturacion_total_alimentos = np.array([np.sum(mes_1[:, 0], axis=0), np.sum(mes_2[:, 0], axis=0), 
+                            np.sum(mes_3[:, 0], axis=0)])
+    
+    facturacion_total_bazar = np.array([np.sum(mes_1[:, 1], axis=0), np.sum(mes_2[:, 1], axis=0), 
+                            np.sum(mes_3[:, 1], axis=0)])
+    
+    facturacion_total_limpieza = np.array([np.sum(mes_1[:, 2], axis=0), np.sum(mes_2[:, 2], axis=0), 
+                            np.sum(mes_3[:, 2], axis=0)])
+    
+    facturacion_total_electrodomesticos = np.array([np.sum(mes_1[:, 3], axis=0), np.sum(mes_2[:, 3], axis=0), 
+                            np.sum(mes_3[:, 3], axis=0)])
+
+    ax2.bar(meses_label, facturacion_total_alimentos, label='Alimentos')
+    ax2.bar(meses_label, facturacion_total_bazar, bottom=facturacion_total_alimentos, label='Bazar')
+    ax2.bar(meses_label, facturacion_total_limpieza, bottom=facturacion_total_alimentos + facturacion_total_bazar,
+            label='Limpieza')
+    ax2.bar(meses_label, facturacion_total_electrodomesticos,
+            bottom=facturacion_total_alimentos + facturacion_total_bazar + facturacion_total_limpieza,
+            label='Electrodomésticos')
+
+    ax2.set_title('Gráfico de Barras Apilados')
+    ax2.set_facecolor('lightcyan')
+    ax2.legend()
+
+    plt.show(block=True)
+      
+
 
 if __name__ == '__main__':
     print("\n\nEjercicios de práctica.\n\n")
@@ -389,4 +491,4 @@ if __name__ == '__main__':
     ej2()
     ej3()
     ej4()
-    #ej5()
+    ej5()
