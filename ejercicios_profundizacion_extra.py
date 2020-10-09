@@ -484,6 +484,101 @@ def ej5():
     plt.show(block=True)
       
 
+    # Desarrollo Usando Compresión de Listas:
+
+    with open('ventas.csv', 'r') as csvfile:
+        data = list(csv.DictReader(csvfile))
+
+    mes_1_alimentos = [int(row.get('Alimentos')) for row in data if row.get('Mes') == '1']
+    mes_2_alimentos = [int(row.get('Alimentos')) for row in data if row.get('Mes') == '2']
+    mes_3_alimentos = [int(row.get('Alimentos')) for row in data if row.get('Mes') == '3']
+
+    mes_1_bazar = [int(row.get('Bazar')) for row in data if row.get('Mes') == '1']
+    mes_2_bazar = [int(row.get('Bazar')) for row in data if row.get('Mes') == '2']
+    mes_3_bazar = [int(row.get('Bazar')) for row in data if row.get('Mes') == '3']
+
+    mes_1_limpieza = [int(row.get('Limpieza')) for row in data if row.get('Mes') == '1']
+    mes_2_limpieza = [int(row.get('Limpieza')) for row in data if row.get('Mes') == '2']
+    mes_3_limpieza = [int(row.get('Limpieza')) for row in data if row.get('Mes') == '3']
+
+    mes_1_electrodomesticos = [int(row.get('Electrodomesticos')) for row in data if row.get('Mes') == '1']
+    mes_2_electrodomesticos = [int(row.get('Electrodomesticos')) for row in data if row.get('Mes') == '2']
+    mes_3_electrodomesticos = [int(row.get('Electrodomesticos')) for row in data if row.get('Mes') == '3']
+
+    # Ploteo:
+    fig11 = plt.figure('Figura 11')
+    fig11.suptitle('Total de Ventas Usando Compresión de Listas', fontsize=15)
+    ax1 = fig11.add_subplot(3,1,1)
+    ax2 = fig11.add_subplot(3,1,2)
+    ax3 = fig11.add_subplot(3,1,3)
+
+    ax1.bar(['Alimentos', 'Bazar', 'Limpieza', 'Electrodomésticos'], [sum(mes_1_alimentos), sum(mes_1_bazar),
+            sum(mes_1_limpieza), sum(mes_1_electrodomesticos)], color='darkred', label='Mes 1')
+    ax1.set_title('Mes 1')
+    ax1.legend()
+    ax1.set_facecolor('lightcyan')
+
+    ax2.bar(['Alimentos', 'Bazar', 'Limpieza', 'Electrodomésticos'], [sum(mes_2_alimentos), sum(mes_2_bazar),
+            sum(mes_2_limpieza), sum(mes_2_electrodomesticos)], color='darkcyan', label='Mes 2')
+    ax2.set_title('Mes 2')
+    ax2.legend()
+    ax2.set_facecolor('lightyellow')
+
+    ax3.bar(['Alimentos', 'Bazar', 'Limpieza', 'Electrodomésticos'], [sum(mes_3_alimentos), sum(mes_3_bazar),
+            sum(mes_3_limpieza), sum(mes_3_electrodomesticos)], color='darkblue', label='Mes 3')
+    ax3.set_title('Mes 3')
+    ax3.legend()
+    ax3.set_facecolor('lightgreen')
+
+    plt.show(block=False)
+
+    # Ploteo Utilizando Gráficos de Barras Agrupados y Apilados:
+
+    fig12 = plt.figure('Figura 12')
+    fig12.suptitle('Total de Ventas Usando Compresión de Listas.')
+    ax1 = fig12.add_subplot(2,1,1)
+    ax2 = fig12.add_subplot(2,1,2)
+
+    fact_alimentos = [sum(mes_1_alimentos), sum(mes_2_alimentos), sum(mes_3_alimentos)]
+    fact_bazar = [sum(mes_1_bazar), sum(mes_2_bazar), sum(mes_3_bazar)]
+    fact_limpieza = [sum(mes_1_limpieza), sum(mes_2_limpieza), sum(mes_3_limpieza)]
+    fact_electrodomesticos = [sum(mes_1_electrodomesticos), sum(mes_2_electrodomesticos), 
+                            sum(mes_3_electrodomesticos)]
+
+    # Gráfico de Barras Apilados (Stack):
+    ax1.bar(['Mes 1', 'Mes 2', 'Mes 3'], fact_alimentos, label='Alimentos')
+    ax1.bar(['Mes 1', 'Mes 2', 'Mes 3'], fact_bazar, bottom=fact_alimentos, label='Bazar')
+    ax1.bar(['Mes 1', 'Mes 2', 'Mes 3'], fact_limpieza, bottom=[sum(num) for num in zip(fact_alimentos, fact_bazar)], 
+        label='Limpieza')
+    ax1.bar(['Mes 1', 'Mes 2', 'Mes 3'], fact_electrodomesticos,
+        bottom=[sum(num) for num in zip(fact_alimentos, fact_bazar, fact_limpieza)], label='Electrodomesticos')
+
+    ax1.set_facecolor('lightgrey')
+    ax1.set_title('Gráfico de Barras Apilados (Stack)')
+    ax1.legend()
+
+    # Gráfico de Barras Agrupados:
+    width = 1/6
+    
+    ax2.bar(meses, [sum(mes_1_alimentos), sum(mes_2_alimentos), sum(mes_3_alimentos)], width=width, 
+            label='Alimentos')
+    ax2.bar(meses + width, [sum(mes_1_bazar), sum(mes_2_bazar), sum(mes_3_bazar)], width=width, 
+            label='Bazar')
+    ax2.bar(meses + 2*width, [sum(mes_1_limpieza), sum(mes_2_limpieza), sum(mes_3_limpieza)], width=width, 
+            label='Limpieza')
+
+    ax2.bar(meses + 3*width, [sum(mes_1_electrodomesticos), sum(mes_2_electrodomesticos), sum(mes_3_electrodomesticos)], 
+            width=width, label='Electrodomésticos')
+
+    ax2.set_facecolor('whitesmoke')
+    ax2.set_title('Gráfico de Barras Agrupados')
+    ax2.set_xticks(meses + width)
+    ax2.set_xticklabels(['Mes 1', 'Mes 2', 'Mes 3'])
+    ax2.legend()
+
+    plt.show(block=True)
+
+
 
 if __name__ == '__main__':
     print("\n\nEjercicios de práctica.\n\n")
